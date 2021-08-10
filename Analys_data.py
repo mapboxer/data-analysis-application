@@ -147,7 +147,8 @@ def get_df(file, code, delim):
             try:
                 df = pd.read_csv(file, encoding=code, delimiter=delim)
             except:
-                st.write("Не верно указаны кодировка и разделитель, для файла .csv")
+                pass
+                #st.write("Не верно указаны кодировка и разделитель, для файла .csv")
         elif extension.upper() == 'XLSX':
             df = pd.read_excel(file, engine='openpyxl')
         # elif extension.upper() == 'XLS':
