@@ -144,9 +144,9 @@ def get_df(file):
     try:
         extension = file.name.split('.')[1]
         if extension.upper() == 'CSV':
-            df = pd.read_csv(file)
+            df = pd.read_csv(file, "cp1251")
         elif extension.upper() == 'XLSX':
-            df = pd.read_excel(file, engine='openpyxl')
+            df = pd.read_excel(file, "cp1251", engine='openpyxl')
         return df
     except OSError as err:
         st.warning(err)
