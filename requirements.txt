@@ -1,0 +1,8 @@
+numpy==1.21.1
+matplotlib==3.1.1
+streamlit==0.80.0
+pandas==1.2.3
+seaborn==0.11.1
+scipy==1.7.1
+pillow==6.2.0
+streamlit-pandas-profiling==0.1.2
