@@ -65,9 +65,9 @@ def correlation_in_data(df):
     numerical_cols = df_types[~df_types['Тип данных'].isin(['object',
                                                             'bool'])].index.values
     st.title("Корреляция в данных")
-    columns = st.multiselect('Выберите колонки для построения матрицы корреляций', numerical_cols)
-    if len(columns) != 0:
-        dff = df[columns]
+    columns_ = st.multiselect('Выберите колонки для построения матрицы корреляций', numerical_cols)
+    if len(columns_) != 0:
+        dff = df[columns_]
         corr_ = dff.corr()
         st.write(corr_)
     else:
