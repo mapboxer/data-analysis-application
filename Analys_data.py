@@ -30,7 +30,7 @@ def full_discrable(df, column, alpha=0.9):
     """Общий анализ дданных по выбранной колонке датафрейма"""
     if pd.api.types.is_numeric_dtype(df[column]):
         with st.beta_expander("График распределения с доверительными интервалами и 99% процентилем: "):
-            """Возможно есть смысл перейти на plotly"""
+            #"""Возможно есть смысл перейти на plotly"""
             confidence = my_norm_confidence(df, column, alpha=0.9)
             fig, ax = plt.subplots()
             fig.set_size_inches(4,3)
@@ -73,7 +73,7 @@ def correlation_in_data(df):
     else:
         st.stop()
     with st.beta_expander("Визуализация матрицы корреляций: "):
-        """Возможно есть смысл перейти на plotly"""
+        #"""Возможно есть смысл перейти на plotly"""
         fig, ax = plt.subplots()
         # fig.set_size_inches(4, 3)
         sns.heatmap(corr_, ax=ax, center=0, annot=True, cmap='Spectral')
