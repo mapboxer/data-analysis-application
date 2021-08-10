@@ -9,7 +9,8 @@ from PIL import Image
 from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy import stats
-
+from pandas_profiling import ProfileReport
+from streamlit_pandas_profiling import st_profile_report
 
 
 
@@ -192,7 +193,7 @@ if selected == "Углубленный анализ данных":
     st.title('Углубленный анализ данных, сводный отчет по данным: ')
     from streamlit_pandas_profiling import st_profile_report
     df = load_data()
-    pr = df.profile_report()
+    pr = ProfileReport(df, title="Отчет")
     st_profile_report(pr) #streamlit-pandas-profiling 0.1.2
 
 if selected == "Первичный анализ данных":
