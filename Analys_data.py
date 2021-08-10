@@ -139,28 +139,39 @@ def metod_range_territory(df, column):
         pass
 
 
-def get_df(file):
-    """Выбор метода чтения файла с ограничениями по расширению файла"""
+def get_df(file, code, delim):
+    # get extension and read file
     try:
         extension = file.name.split('.')[1]
         if extension.upper() == 'CSV':
-            df = pd.read_csv(file, encoding='cp1251')
+            try:
+                df = pd.read_csv(file, encoding=code, delimiter=delim)
+            except:
+                st.write("Не верно указаны кодировка и разделитель, для файла .csv")
         elif extension.upper() == 'XLSX':
-            df = pd.read_excel(file,  engine='openpyxl')
+            df = pd.read_excel(file, engine='openpyxl')
+        # elif extension.upper() == 'XLS':
+        #     df = pd.read_excel(file, engine='openpyxl')
         return df
     except OSError as err:
         st.warning(err)
         return None
 
 def load_data():
-    """Загрузка данных"""
+    #st.title('Explore a dataset')
+    #st.write('A general purpose data exploration app')
+
+    #st.title('                          ')
     st.write("Выберите файл с расширением .csv или .xlsx для дальнейшего анализа:")
+    code = st.selectbox('Кодировка файла .csv', ['utf8', 'cp1251'])
+    delim = st.selectbox('Разделитель .csv', [',', ';', '\\t'])
     file = st.file_uploader("", type=['csv', 'xlsx'])
+
     if not file:
         st.stop()
         # st.write("Выбранный файл не имеет расширения .csv или .xlsx")
         # return
-    df = get_df(file)
+    df = get_df(file, code, delim)
     return df
 
 
@@ -182,25 +193,35 @@ selected = st.sidebar.selectbox('Выберите инструмент', ['', "�
 
 if selected == "Методика ранжирования территорий по уровням заболеваемости":
     st.title('Методика ранжирования территорий по уровням заболеваемости')
-    df = load_data()
-    st.write(df)
-    # explore(df)
-    st.title('Выберите колонку для дальнейших расчетов: ')
-    column = st.selectbox('', df.columns)
-    metod_range_territory(df, column)
-
+        try:
+        df = load_data()
+        st.write(df)
+        # explore(df)
+        st.title('Выберите колонку для дальнейших расчетов: ')
+        column = st.selectbox('', df.columns)
+        metod_range_territory(df, column)
+    except UnboundLocalError:
+        st.write("Не верно указаны кодировка и разделитель, для файла .csv")
+        
 if selected == "Углубленный анализ данных":
     st.title('Углубленный анализ данных, сводный отчет по данным: ')
     from streamlit_pandas_profiling import st_profile_report
-    df = load_data()
-    pr = ProfileReport(df)
-    st_profile_report(pr) #streamlit-pandas-profiling 0.1.2
+    try:
+        df = load_data()
+        pr = df.profile_report()
+        st_profile_report(pr)
+    except UnboundLocalError:
+        st.write("Не верно указаны кодировка и разделитель, для файла .csv")
 
 if selected == "Первичный анализ данных":
     st.title('Первичный анализ данных: ')
-    df = load_data()
-    explore(df)
-    column = st.selectbox('Выберите колонку для дальнейшего анализа: ', df.columns)
-    full_discrable(df, column, alpha=0.9)
-    correlation_in_data(df)
+    try:
+        df = load_data()
+        explore(df)
+        column = st.selectbox('Выберите колонку для дальнейшего анализа: ', df.columns)
+
+        full_discrable(df, column, alpha=0.9)
+        correlation_in_data(df)
+    except UnboundLocalError:
+        st.write("Не верно указаны кодировка и разделитель, для файла .csv")
 
