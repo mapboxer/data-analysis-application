@@ -144,7 +144,7 @@ def get_df(file):
     try:
         extension = file.name.split('.')[1]
         if extension.upper() == 'CSV':
-            df = pd.read_csv(file, "cp1251")
+            df = pd.read_csv(file, encoding='cp1251')
         elif extension.upper() == 'XLSX':
             df = pd.read_excel(file,  engine='openpyxl')
         return df
@@ -193,7 +193,7 @@ if selected == "Углубленный анализ данных":
     st.title('Углубленный анализ данных, сводный отчет по данным: ')
     from streamlit_pandas_profiling import st_profile_report
     df = load_data()
-    pr = ProfileReport(df, title="Отчет")
+    pr = ProfileReport(df)
     st_profile_report(pr) #streamlit-pandas-profiling 0.1.2
 
 if selected == "Первичный анализ данных":
