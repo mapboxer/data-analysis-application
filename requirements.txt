@@ -8,3 +8,4 @@ pillow==6.2.0
 pandas-profiling==2.8.0
 streamlit-pandas-profiling==0.1.2
 openpyxl
+jinja2<3.1.0
